@@ -13,7 +13,24 @@ async function handleGenerateShortUrl(req, res) {
     res.status(201).json({ shortId })
 }
 
+async function handleGetShortUrl(req, res) {
+    const shortId = req.params.shortId;
+    const url = await URL.findOneAndUpdate({ shortId }, { $push: { visitHistory: { timestamp: Date.now() } } }
+    );
+    if (!url) return res.status(404).json({ message: "URL not found" });
+    res.redirect(url.redirectUrl);
+}
+
+async function handleGetAnalytics(req, res) {
+    const shortId = req.params.shortId;
+    const url = await URL.findOne({ shortId });
+    if (!url) return res.status(404).json({ message: "URL not found" });
+    res.status(200).json({ totalClicks: url.visitHistory.length, analytics: url.visitHistory });
+}
+
 module.exports = {
-    handleGenerateShortUrl
+    handleGenerateShortUrl,
+    handleGetShortUrl,
+    handleGetAnalytics
 }
 

@@ -8,14 +8,17 @@
 </head>
 
 <body>
-    <h1>Hey</h1>
-    <ul>
-        <% urls.forEach(url=> { %>
-            <li>
-                <%= url.shortId %>
-            </li>
-            <% }) %>
-    </ul>
+    <h1>Shortly</h1>
+    <% if (locals.id) { %>
+        <p>Your short URL is: <a href="http://localhost:8001/url/<%= locals.id %>">http://localhost:8001/url/<%=
+                    locals.id %></a></p>
+        <% } %>
+            <form action="/url" method="POST">
+                <label>Enter your URL</label>
+                <input type="text" name="url" placeholder="Enter your URL">
+                <button type="submit">Shorten</button>
+            </form>
+
 </body>
 
 </html>

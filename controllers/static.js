@@ -5,4 +5,8 @@ async function handleHome(req, res) {
     res.render("home", { urls: allUrl });
 }
 
-module.exports = { handleHome };
+async function handleSignup(req, res) {
+    res.render("signup");
+}
+
+module.exports = { handleHome, handleSignup };

@@ -1,10 +1,16 @@
 const express = require("express");
-const app = express();
-const path = require("path");
-const PORT = 8001;
-const { connectDB } = require("./connect");
+
 const urlRouter = require("./routes/url");
 const staticRouter = require("./routes/staticRouter");
+const userRouter = require("./routes/user");
+
+const app = express();
+
+const path = require("path");
+const PORT = 8001;
+
+const { connectDB } = require("./connect");
+
 app.use(express.json());
 
 connectDB("mongodb://localhost:27017/short-url").then(() => {
@@ -21,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/url", urlRouter);
 app.use("/", staticRouter);
+app.use("/user", userRouter);
 
 
 

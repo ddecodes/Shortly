@@ -1,9 +1,12 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 
+const { restrictToLoggedinUserOnly, checkAuth } = require("./middlewares/auth");
+
 const urlRouter = require("./routes/url");
 const staticRouter = require("./routes/staticRouter");
 const userRouter = require("./routes/user");
+
 
 const app = express();
 
@@ -27,8 +30,8 @@ app.set("views", path.resolve("./views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/url", urlRouter);
-app.use("/", staticRouter);
+app.use("/url", restrictToLoggedinUserOnly, urlRouter);
+app.use("/", checkAuth, staticRouter);
 app.use("/user", userRouter);
 
 

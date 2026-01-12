@@ -9,4 +9,8 @@ async function handleSignup(req, res) {
     res.render("signup");
 }
 
-module.exports = { handleHome, handleSignup };
+async function handleLogin(req, res) {
+    res.render("login");
+}
+
+module.exports = { handleHome, handleSignup, handleLogin };
